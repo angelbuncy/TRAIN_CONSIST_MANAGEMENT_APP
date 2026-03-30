@@ -2,43 +2,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * UC5: Map Bogie IDs to Capacity (HashMap)
- * This class simulates a database/lookup table for train bogies.
- * Key: Bogie ID (Unique) | Value: Capacity (Integer)
+ * UC6: Validate Bogie Data (Exception Handling)
+ * This class introduces data validation to ensure the train's
+ * inventory remains accurate and logical.
  */
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
-
-        // 1. Initialize the HashMap
-        // Map<KeyType, ValueType>
         Map<String, Integer> bogieInventory = new HashMap<>();
 
-        System.out.println("=== Bogie Capacity Inventory System ===\n");
+        System.out.println("=== Train Data Validation System ===\n");
 
-        // 2. Adding Data (Put operations)
-        bogieInventory.put("BG101", 72); // Sleeper
-        bogieInventory.put("BG102", 54); // AC Chair
-        bogieInventory.put("BG103", 24); // First Class
+        // Attempting to add various bogies
+        registerBogie(bogieInventory, "BG201", 72);  // Valid
+        registerBogie(bogieInventory, "", 50);       // Invalid ID
+        registerBogie(bogieInventory, "BG202", -10); // Invalid Capacity
+        registerBogie(bogieInventory, "BG203", 24);  // Valid
 
-        System.out.println("Inventory Updated: " + bogieInventory);
+        System.out.println("\n--- Final Validated Inventory ---");
+        System.out.println(bogieInventory);
+    }
 
-        // 3. Retrieving Data (Get operations)
-        String searchId = "102"; // Let's check BG102
-        if (bogieInventory.containsKey("BG" + searchId)) {
-            int capacity = bogieInventory.get("BG" + searchId);
-            System.out.println("Lookup: Bogie BG" + searchId + " has a capacity of " + capacity + " seats.");
-        }
+    /**
+     * Helper method to validate and add bogies to the map.
+     * Demonstrates basic manual exception handling logic.
+     */
+    public static void registerBogie(Map<String, Integer> map, String id, int capacity) {
+        try {
+            // 1. Validate ID
+            if (id == null || id.trim().isEmpty()) {
+                throw new IllegalArgumentException("Invalid ID: Bogie ID cannot be empty.");
+            }
 
-        // 4. Updating a Value
-        // If a bogie is refurbished, we simply 'put' the new value over the old key
-        System.out.println("\nAction: Refurbishing BG103 to increase capacity...");
-        bogieInventory.put("BG103", 30);
+            // 2. Validate Capacity
+            if (capacity <= 0) {
+                throw new IllegalArgumentException("Invalid Capacity: Must be greater than 0 for ID " + id);
+            }
 
-        // 5. Final State Display
-        System.out.println("\n--- Final Inventory Summary ---");
-        for (Map.Entry<String, Integer> entry : bogieInventory.entrySet()) {
-            System.out.println("Bogie ID: " + entry.getKey() + " | Capacity: " + entry.getValue());
+            // 3. Add to Map if all checks pass
+            map.put(id, capacity);
+            System.out.println("Successfully Registered: " + id + " (" + capacity + " seats)");
+
+        } catch (IllegalArgumentException e) {
+            // Catching the error and printing a user-friendly message
+            System.err.println("ALERT: Registration Failed! -> " + e.getMessage());
         }
     }
 }
