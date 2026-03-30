@@ -1,43 +1,45 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
 
 /**
- * UC3: Track Unique Bogie IDs (Set – HashSet)
- * This class ensures that every bogie added to the system has a unique ID.
- * It demonstrates how HashSet handles duplicate data automatically.
+ * UC4: Maintain Ordered Bogie IDs (LinkedList Operations)
+ * This class simulates the physical chaining of a train.
+ * It demonstrates efficient insertion at the head, tail, and middle.
  */
-public class TrainConsistManagementApp {
+public class TrainConsistManagementApp{
 
     public static void main(String[] args) {
 
-        // 1. Initialize a HashSet to store unique Bogie IDs
-        // We use the Set interface for abstraction
-        Set<String> bogieIds = new HashSet<>();
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        System.out.println("=== Train Bogie ID Registration ===");
+        System.out.println("=== Physical Train Consist Formation ===\n");
 
-        // 2. Adding Unique Bogie IDs
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        // 2. Building the initial sequence
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC Coach");
+        trainConsist.add("Cargo");
 
-        System.out.println("Initial IDs added: [BG101, BG102, BG103]");
+        // Using addFirst and addLast for specific positioning
+        trainConsist.addFirst("Engine");       // Engine must be at the front
+        trainConsist.addLast("Guard Coach");   // Guard must be at the rear
 
-        // 3. ATTEMPTING TO ADD DUPLICATES
-        // In a List, this would create a second entry. In a Set, it is ignored.
-        System.out.println("\nAttempting to add duplicate ID: BG101...");
-        boolean isAdded = bogieIds.add("BG101");
+        System.out.println("Initial Formation: " + trainConsist);
 
-        if (!isAdded) {
-            System.out.println("Constraint Violated: ID 'BG101' already exists. Duplicate ignored.");
-        }
+        // 3. Inserting in the middle (Pantry Car at position 2)
+        // LinkedList handles this by simply updating the neighboring pointers
+        System.out.println("\nAction: Inserting 'Pantry Car' at position 2...");
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("Updated Formation: " + trainConsist);
 
-        // 4. Displaying the final Set
-        System.out.println("\n--- Final Unique Bogie Inventory ---");
-        System.out.println("Total Unique Bogies: " + bogieIds.size());
-        System.out.println("Registered IDs: " + bogieIds);
+        // 4. Detaching bogies (Removing First and Last)
+        System.out.println("\nAction: Detaching the Engine and the Guard Coach...");
+        trainConsist.removeFirst();
+        trainConsist.removeLast();
 
-        System.out.println("\nNote: Observe that the order might differ from the insertion order.");
-        System.out.println("System ready for unique identification checks...");
+        // 5. Final State
+        System.out.println("\n--- Final Ordered Train Consist ---");
+        System.out.println("Current Sequence: " + trainConsist);
+        System.out.println("Total Bogies: " + trainConsist.size());
+
+        System.out.println("\nSystem ready for coupling/de-coupling operations...");
     }
 }
