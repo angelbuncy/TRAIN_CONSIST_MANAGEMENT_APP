@@ -4,25 +4,35 @@ import java.util.List;
 public class TrainConsistManagementApp {
         public static void main(String[] args) {
 
-            // 1. Display welcome banner
-            System.out.println("==========================================");
-            System.out.println(" === Train Consist Management App ===");
-            System.out.println("==========================================\n");
-
-            // 2. Create a dynamic List to store train bogies
-            // Using List interface for abstraction and ArrayList for implementation
+            // 1. Initialize the Train Consist
             List<String> trainConsist = new ArrayList<>();
+            System.out.println("=== Initializing Train with Passenger Bogies ===\n");
 
-            // 3. Display initial consist information
-            System.out.println("Train initialized successfully...");
+            // 2. ADDING BOGIES (Create/Insert)
+            trainConsist.add("Sleeper");
+            trainConsist.add("AC Chair");
+            trainConsist.add("First Class");
 
-            // size() returns the number of elements currently in the list
-            System.out.println("Initial Bogie Count : " + trainConsist.size());
+            System.out.println("After adding bogies: " + trainConsist);
+            System.out.println("Total Bogies: " + trainConsist.size());
+            System.out.println("------------------------------------------");
 
-            // Printing the list object directly shows its contents (currently empty [])
-            System.out.println("Current Train Consist : " + trainConsist);
+            // 3. REMOVING A BOGIE (Delete)
+            // Removing "AC Chair" from the consist
+            trainConsist.remove("AC Chair");
+            System.out.println("Action: Removing 'AC Chair'...");
+            System.out.println("Updated Train Consist: " + trainConsist);
+            System.out.println("------------------------------------------");
 
-            System.out.println("\nSystem ready for operations...");
+            // 4. CHECKING EXISTENCE (Search)
+            // Using contains() to check if a specific bogie is still attached
+            boolean hasSleeper = trainConsist.contains("Sleeper");
+            System.out.println("Checking: Is 'Sleeper' still in the consist? " + hasSleeper);
+
+            // 5. FINAL STATE
+            System.out.println("\nFinal Bogie Count : " + trainConsist.size());
+            System.out.println("Final Train Consist : " + trainConsist);
+            System.out.println("\nSystem ready for further operations...");
         }
     }
 
