@@ -1,45 +1,44 @@
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * UC4: Maintain Ordered Bogie IDs (LinkedList Operations)
- * This class simulates the physical chaining of a train.
- * It demonstrates efficient insertion at the head, tail, and middle.
+ * UC5: Map Bogie IDs to Capacity (HashMap)
+ * This class simulates a database/lookup table for train bogies.
+ * Key: Bogie ID (Unique) | Value: Capacity (Integer)
  */
-public class TrainConsistManagementApp{
+public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        LinkedList<String> trainConsist = new LinkedList<>();
+        // 1. Initialize the HashMap
+        // Map<KeyType, ValueType>
+        Map<String, Integer> bogieInventory = new HashMap<>();
 
-        System.out.println("=== Physical Train Consist Formation ===\n");
+        System.out.println("=== Bogie Capacity Inventory System ===\n");
 
-        // 2. Building the initial sequence
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC Coach");
-        trainConsist.add("Cargo");
+        // 2. Adding Data (Put operations)
+        bogieInventory.put("BG101", 72); // Sleeper
+        bogieInventory.put("BG102", 54); // AC Chair
+        bogieInventory.put("BG103", 24); // First Class
 
-        // Using addFirst and addLast for specific positioning
-        trainConsist.addFirst("Engine");       // Engine must be at the front
-        trainConsist.addLast("Guard Coach");   // Guard must be at the rear
+        System.out.println("Inventory Updated: " + bogieInventory);
 
-        System.out.println("Initial Formation: " + trainConsist);
+        // 3. Retrieving Data (Get operations)
+        String searchId = "102"; // Let's check BG102
+        if (bogieInventory.containsKey("BG" + searchId)) {
+            int capacity = bogieInventory.get("BG" + searchId);
+            System.out.println("Lookup: Bogie BG" + searchId + " has a capacity of " + capacity + " seats.");
+        }
 
-        // 3. Inserting in the middle (Pantry Car at position 2)
-        // LinkedList handles this by simply updating the neighboring pointers
-        System.out.println("\nAction: Inserting 'Pantry Car' at position 2...");
-        trainConsist.add(2, "Pantry Car");
-        System.out.println("Updated Formation: " + trainConsist);
+        // 4. Updating a Value
+        // If a bogie is refurbished, we simply 'put' the new value over the old key
+        System.out.println("\nAction: Refurbishing BG103 to increase capacity...");
+        bogieInventory.put("BG103", 30);
 
-        // 4. Detaching bogies (Removing First and Last)
-        System.out.println("\nAction: Detaching the Engine and the Guard Coach...");
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
-
-        // 5. Final State
-        System.out.println("\n--- Final Ordered Train Consist ---");
-        System.out.println("Current Sequence: " + trainConsist);
-        System.out.println("Total Bogies: " + trainConsist.size());
-
-        System.out.println("\nSystem ready for coupling/de-coupling operations...");
+        // 5. Final State Display
+        System.out.println("\n--- Final Inventory Summary ---");
+        for (Map.Entry<String, Integer> entry : bogieInventory.entrySet()) {
+            System.out.println("Bogie ID: " + entry.getKey() + " | Capacity: " + entry.getValue());
+        }
     }
 }
